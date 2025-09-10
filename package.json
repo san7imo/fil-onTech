@@ -13,7 +13,8 @@
     "type-check": "tsc --noEmit",
     "pre-commit": "npm run type-check && npm run lint && npm run prettier:check",
     "analyze": "ANALYZE=true npm run build",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test": "echo \"No tests specified\" && exit 0"
   },
   "dependencies": {
     "clsx": "^2.1.1",
