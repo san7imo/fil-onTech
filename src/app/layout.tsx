@@ -1,8 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import Navbar from '@/components/layout/Navbar';
-import Footer from '@/components/layout/Footer';
 import { COMPANY_INFO } from '@/lib/constants';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -79,11 +77,9 @@ export default function RootLayout({
     <html lang="es" className="scroll-smooth">
       <body className={`${inter.className} antialiased`}>
         <div className="min-h-screen flex flex-col">
-          <Navbar />
           <main className="flex-grow">
             {children}
           </main>
-          <Footer />
         </div>
       </body>
     </html>
