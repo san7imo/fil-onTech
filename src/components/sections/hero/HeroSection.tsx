@@ -19,10 +19,8 @@ const HeroSection = () => {
           </div>
 
           {/* Descripción */}
-          <p className="text-base md:text-lg text-white/80 mb-8 max-w-xl leading-relaxed">
-            Transformamos la industria minera a través de soluciones 
-            financieras innovadoras, uniendo tecnología de vanguardia 
-            con el poder de la cooperación.
+          <p className="text-base md:text-lg text-white mb-8 max-w-xl leading-relaxed font-medium">
+Promovemos la inclusión del sector minero en el sistema financiero, ofreciendo soluciones innovadoras que impulsan el crecimiento, fortalecen la seguridad y fomentan la cooperación para un futuro sostenible.
           </p>
 
           {/* Botones de acción */}

@@ -12,15 +12,21 @@ const HeaderLayout = () => {
       {/* Imagen de fondo */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/images/banerhead.webp"
+          src="/images/agrominera.jpg"
           alt="Background"
           fill
           className="object-cover"
           priority
-          quality={100}
+          quality={75}
         />
-        {/* Overlay para mejorar legibilidad */}
-        <div className="absolute inset-0 bg-black/40" />
+        {/* Overlay base con tonos azulados */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1a1f2d]/40 via-[#1a1f2d]/45 to-[#111827]/60" />
+        {/* Overlay para mejorar contraste de texto */}
+        <div className="absolute inset-0 bg-black/20" />
+        {/* Overlay adicional para profundidad */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#111827]/20 via-transparent to-[#111827]/20" />
+        {/* Overlay para asegurar legibilidad del texto */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/40 via-[#111827]/20 to-transparent" />
       </div>
 
       {/* Contenido */}

@@ -6,27 +6,26 @@ import Container from '@/components/ui/Container';
 const LogoHeader = () => {
   return (
     <div className="relative w-full">
-      {/* Línea horizontal superior */}
-      <div className="absolute top-1/2 left-0 right-0 h-px bg-white/30 transform -translate-y-1/2 z-0" />
-      
+{/* Línea izquierda */}
+<div className="absolute left-0 top-[34.5%] h-[5px] bg-white w-1/2 z-10" />
+
+{/* Línea derecha */}
+<div className="absolute right-0 top-[22.5%] h-[5px] bg-white w-1/2 z-10" />
+
+
       {/* Container para el logo */}
       <Container>
-        <div className="flex justify-center py-8">
-          <div className="bg-black/20 backdrop-blur-sm rounded-full p-4 relative z-10">
-            <Image
-              src="/images/logo.webp"
-              alt="fil-On Tech"
-              width={120}
-              height={120}
-              className="object-contain"
-              priority
-            />
-          </div>
+        <div className="flex justify-center py-8 relative z-0">
+          <Image
+            src="/images/logo.webp"
+            alt="Fil-On Tech"
+            width={170}
+            height={170}
+            className="object-contain"
+            priority
+          />
         </div>
       </Container>
-      
-      {/* Línea horizontal inferior */}
-      <div className="absolute top-1/2 left-0 right-0 h-px bg-white/30 transform -translate-y-1/2 z-0" />
     </div>
   );
 };
