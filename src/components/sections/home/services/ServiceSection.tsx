@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Container } from '@/components/ui';
-import ServiceCard from '@/components/sections/services/ServiceCard';
+import ServiceCard from '@/components/sections/home/services/ServiceCard';
 import { servicesData } from '@/data/services';
 import { Service } from '@/types/services';
 import FadeInUp from '@/components/ui/animations/FadeInUp';

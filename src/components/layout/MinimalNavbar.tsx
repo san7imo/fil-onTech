@@ -6,14 +6,21 @@ import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Home, Users, Briefcase, Mail } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { NAVIGATION } from '@/lib/constants';
 import Container from '@/components/ui/Container';
+
+// Definimos las rutas
+const NAVIGATION = [
+  { name: 'Inicio', href: '/' },
+  { name: 'Quiénes Somos', href: '/quienes-somos' },
+  { name: 'Servicios', href: '/servicios' },
+  { name: 'Contacto', href: '/contacto' },
+];
 
 const MinimalNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
-  // Cerrar menú móvil al cambiar de ruta
+  // Cierra el menú al cambiar de ruta
   useEffect(() => {
     setIsOpen(false);
   }, [pathname]);
@@ -25,25 +32,20 @@ const MinimalNavbar = () => {
     '/contacto': Mail,
   };
 
-  const isActive = (href: string): boolean => {
-    if (href === '/') {
-      return pathname === '/';
-    }
-    return pathname.startsWith(href);
-  };
+  const isActive = (href: string): boolean =>
+    href === '/' ? pathname === '/' : pathname.startsWith(href);
 
   return (
     <nav className="relative z-40">
       <Container>
         <div className="flex items-center justify-center py-4">
-          {/* Navegación Desktop - Minimalista */}
+          {/* Desktop */}
           <div className="hidden md:flex">
             <div className="bg-black/20 backdrop-blur-md rounded-full px-6 py-3 border border-white/20">
               <div className="flex items-center space-x-8">
                 {NAVIGATION.map((item) => {
                   const Icon = navIcons[item.href as keyof typeof navIcons];
                   const active = isActive(item.href);
-                  
                   return (
                     <Link
                       key={item.name}
@@ -91,7 +93,6 @@ const MinimalNavbar = () => {
                   {NAVIGATION.map((item) => {
                     const Icon = navIcons[item.href as keyof typeof navIcons];
                     const active = isActive(item.href);
-                    
                     return (
                       <Link
                         key={item.name}

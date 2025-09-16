@@ -2,9 +2,9 @@
 
 import Image from 'next/image';
 import LogoHeader from './LogoHeader';
-import MinimalNavbar from '../../layout/MinimalNavbar';
 import HeroSection from './HeroSection';
 import FadeInUp from '@/components/ui/animations/FadeInUp';
+import MinimalNavbar from '@/components/layout/MinimalNavbar';
 
 const HeaderLayout = () => {
   return (
@@ -35,12 +35,8 @@ const HeaderLayout = () => {
         <FadeInUp delay={0.1}>
           <LogoHeader />
         </FadeInUp>
-        
-        {/* Navbar minimalista */}
-        <FadeInUp delay={0.3}>
+        {/* Navbar global */}
           <MinimalNavbar />
-        </FadeInUp>
-        
         {/* Hero Section */}
         <FadeInUp delay={0.5}>
           <HeroSection />
