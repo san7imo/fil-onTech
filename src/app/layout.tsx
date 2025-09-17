@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { COMPANY_INFO } from '@/lib/constants';
+import Footer from '@/components/layout/Footer';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -59,7 +60,7 @@ export const metadata: Metadata = {
     creator: '@filontech',
   },
   verification: {
-    google: 'google-site-verification-code', // Agregar código real
+    google: 'google-site-verification-code', // Reemplazar con tu código real
   },
   alternates: {
     canonical: `https://${COMPANY_INFO.website}`,
@@ -70,16 +71,16 @@ interface RootLayoutProps {
   children: React.ReactNode;
 }
 
-export default function RootLayout({
-  children,
-}: RootLayoutProps){
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="es" className="scroll-smooth">
       <body className={`${inter.className} antialiased`}>
-        <div className="min-h-screen flex flex-col">
-          <main className="flex-grow">
-            {children}
-          </main>
+        <div className="min-h-screen flex flex-col bg-[#0F1112]">
+          {/* Contenido dinámico de cada página */}
+          <main className="flex-grow">{children}</main>
+
+          {/* Footer global */}
+          <Footer />
         </div>
       </body>
     </html>
