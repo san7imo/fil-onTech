@@ -1,7 +1,6 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import emailjs from '@emailjs/browser';
 import FadeInUp from '@/components/ui/animations/FadeInUp';
 import { Container } from '@/components/ui';
 
@@ -16,16 +15,12 @@ export default function FormContacto() {
 
     setLoading(true);
     try {
-      await emailjs.sendForm(
-        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
-        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
-        formRef.current,
-        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
-      );
-      setSuccess('✅ Tu mensaje fue enviado correctamente.');
+      // 🚨 DEMO MODE: Simula un envío de email
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      setSuccess('✅ Tu mensaje fue enviado correctamente (demo, sin envío real).');
       formRef.current.reset();
     } catch {
-      setSuccess('❌ Hubo un error al enviar el mensaje.');
+      setSuccess('❌ Hubo un error al enviar el mensaje (demo).');
     } finally {
       setLoading(false);
     }
