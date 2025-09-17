@@ -1,13 +1,12 @@
 'use client';
 
 import { Container } from '@/components/ui';
-import HeaderLayout from '@/components/sections/hero/HeaderLayout';
-import ServicesSection from '@/components/sections/services/ServiceSection';
-import ResponsabilidadSocialSection from '@/components/sections/responsabilidad/ResponsabilidadSection';
-import Footer from '@/components/layout/Footer';
-import ComplianceSection from '@/components/sections/cumplimiento/CompilanceSection';
+import HeaderLayout from '@/components/sections/home/hero/HeaderLayout';
+import ServicesSection from '@/components/sections/home/services/ServiceSection';
+import ResponsabilidadSocialSection from '@/components/sections/home/responsabilidad/ResponsabilidadSection';
+import ComplianceSection from '@/components/sections/home/cumplimiento/CompilanceSection';
 
-import VanguardSection from '@/components/sections/services/VanguardSection';
+import VanguardSection from '@/components/sections/home/services/VanguardSection';
 /* Lines 2-8 omitted */
 
 export default function HomePage() {
@@ -156,8 +155,6 @@ export default function HomePage() {
       
       {/*Cumplimiento y control*/}
       <ComplianceSection />
-      {/* Footer */}
-      <Footer />
     </div>
   );
 }
