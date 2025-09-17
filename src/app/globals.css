@@ -1,26 +1,154 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+    /* Colores base de la marca - Tema Claro (fallback) */
+    --background: 160 20% 95%;          /* Gris muy claro (#F2F2F2) */
+    --foreground: 160 20% 12%;          /* Verde oscuro (#1A261E) */
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    --card: 0 0% 100%;
+    --card-foreground: 160 20% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 160 20% 12%;
+
+    /* Paleta de marca */
+    --primary: 290 35% 45%;             /* Morado (#84458C) */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 142 9% 45%;            /* Verde grisáceo (#6A7C6F) */
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 200 18% 36%;               /* Azul grisáceo (#4C6670) */
+    --muted-foreground: 0 0% 100%;
+
+    --accent: 36 35% 55%;               /* Dorado (#B49269) */
+    --accent-foreground: 0 0% 100%;
+
+    --success: 158 64% 52%;             /* Verde corporativo (#10B981) */
+    --success-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 160 20% 85%;
+    --input: 160 20% 85%;
+    --ring: 290 35% 45%;
+
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    /* Tema oscuro como predeterminado para la aplicación */
+    --background: 160 20% 10%;          /* Verde muy oscuro (#1A261E) */
+    --foreground: 0 0% 95%;             /* Blanco suave (#F2F2F2) */
+
+    --card: 160 20% 10%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 160 20% 10%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 290 35% 45%;             /* Morado (#84458C) */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 142 9% 45%;            /* Verde grisáceo (#6A7C6F) */
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 200 18% 30%;               /* Azul grisáceo más oscuro */
+    --muted-foreground: 0 0% 80%;
+
+    --accent: 36 35% 55%;               /* Dorado (#B49269) */
+    --accent-foreground: 0 0% 100%;
+
+    --success: 158 64% 52%;             /* Verde corporativo (#10B981) */
+    --success-foreground: 0 0% 100%;
+
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 160 20% 20%;
+    --input: 160 20% 20%;
+    --ring: 290 35% 45%;
+  }
+
+  /* Aplicar tema oscuro por defecto */
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    background-color: #0F1112;          /* Fondo más oscuro y neutral */
+    color: #F2F2F2;                     /* Forzar texto claro */
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: #0F1112;          /* Fondo más oscuro y neutral */
+  }
+
+  /* Estilos personalizados para elementos de la marca */
+  .gradient-text-brand {
+    background: linear-gradient(135deg, #84458C 0%, #B49269 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .shadow-brand-green {
+    box-shadow: 0 10px 25px -3px rgba(16, 185, 129, 0.1), 0 4px 6px -2px rgba(16, 185, 129, 0.05);
+  }
+
+  .shadow-brand-purple {
+    box-shadow: 0 10px 25px -3px rgba(132, 69, 140, 0.1), 0 4px 6px -2px rgba(132, 69, 140, 0.05);
+  }
+
+  .shadow-brand-gold {
+    box-shadow: 0 10px 25px -3px rgba(180, 146, 105, 0.1), 0 4px 6px -2px rgba(180, 146, 105, 0.05);
+  }
+
+  /* Animación suave para elementos interactivos */
+  .transition-brand {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Scrollbar personalizado para tema oscuro */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #1A261E;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #4C6670;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #6A7C6F;
+  }
+
+  /* Mejoras para elementos de formulario en tema oscuro */
+  input, textarea, select {
+    background-color: rgba(76, 102, 112, 0.1);
+    border: 1px solid rgba(106, 124, 111, 0.3);
+    color: #F2F2F2;
+  }
+
+  input:focus, textarea:focus, select:focus {
+    border-color: #84458C;
+    box-shadow: 0 0 0 3px rgba(132, 69, 140, 0.1);
+    outline: none;
+  }
+
+  /* Placeholder styling */
+  ::placeholder {
+    color: rgba(242, 242, 242, 0.5);
+  }
 }
