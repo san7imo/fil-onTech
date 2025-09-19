@@ -12,7 +12,7 @@ export interface Service {
   title: string;
   description: string;
   features: string[];
-  color: 'capital' | 'tech' | 'guardian';
+  color: 'capital' | 'tech' | 'guardian' | 'legaltech';
   icon: string;
 }
 
