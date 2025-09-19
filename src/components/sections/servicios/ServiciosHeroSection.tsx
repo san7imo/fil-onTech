@@ -20,8 +20,7 @@ export default function ServiciosHeroSection() {
                 Nuestros Servicios
               </h1>
               <p className="max-w-4xl mx-auto text-xl text-[#D1D5DB] leading-relaxed">
-                Soluciones financieras y tecnológicas especializadas para el sector minero,
-                desde productos tradicionales hasta innovación blockchain y DeFi
+                Soluciones financieras y tecnológicas especializadas para el sector minero, desde productos tradicionales hasta innovación blockchain y DeFi
               </p>
             </div>
           </FadeInUp>
@@ -29,10 +28,30 @@ export default function ServiciosHeroSection() {
           <FadeInUp delay={0.3}>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
               {[
-                { icon: '💳', label: 'Servicios Financieros', count: '6+', color: 'from-[#10B981] to-[#34D399]' },
-                { icon: '⚖️', label: 'Legal & Tech', count: '3+', color: 'from-[#2563EB] to-[#8B5CF6]' },
-                { icon: '🪙', label: 'Cripto & DeFi', count: '5+', color: 'from-[#8B5CF6] to-[#2563EB]' },
-                { icon: '🛒', label: 'Complementarios', count: '3+', color: 'from-[#34D399] to-[#10B981]' }
+                { 
+                  icon: '💰', 
+                  label: 'Capital', 
+                  count: '6+', 
+                  color: 'from-[#2563EB] to-[#1D4ED8]' 
+                },
+                { 
+                  icon: '⚡', 
+                  label: 'Tech', 
+                  count: '3+', 
+                  color: 'from-[#10B981] to-[#34D399]' 
+                },
+                { 
+                  icon: '⚖️', 
+                  label: 'LegalTech', 
+                  count: '5+', 
+                  color: 'from-[#6B7280] to-[#9CA3AF]' 
+                },
+                { 
+                  icon: '🛡️', 
+                  label: 'Guardian', 
+                  count: '3+', 
+                  color: 'from-[#8B5CF6] to-[#A855F7]' 
+                }
               ].map((service, idx) => (
                 <div key={idx} className={`p-6 rounded-2xl bg-gradient-to-br ${service.color.replace('from-', 'from-').replace(' to-', '/10 to-').replace(']', '/5]')} border border-white/10 hover:border-white/20 transition-all duration-300 hover:-translate-y-2 group`}>
                   <div className="text-center">

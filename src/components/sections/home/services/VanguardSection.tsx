@@ -23,28 +23,42 @@ const VanguardSection = () => {
               className="object-cover w-full h-full transition-all duration-500 ease-in-out group-hover:opacity-90"
               priority
             />
-            {/* Overlay sutil */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent" />
+            {/* Overlay sutil solo en desktop */}
+            <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent" />
           </div>
 
-          {/* Contenido mejorado */}
-          <div className="absolute inset-0 flex items-center px-4 md:px-6 lg:px-8">
+          {/* Contenido en overlay (solo desktop/tablet) */}
+          <div className="hidden md:flex absolute inset-0 items-center px-6 lg:px-8">
             <div className="max-w-sm md:max-w-md transition-all duration-500 group-hover:scale-105">
-      
-              <h2 className="text-base md:text-lg lg:text-xl font-bold text-white leading-tight mb-2">
+              <h2 className="text-lg lg:text-xl font-bold text-white leading-tight mb-2">
                 Tecnología de{" "}
                 <span className="font-extrabold bg-gradient-to-r from-[#84458C] to-[#B49269] bg-clip-text text-transparent">
                   Vanguardia
                 </span>{" "}
                 para el sector minero.
               </h2>
-              
-              <p className="text-white/90 text-[10px] md:text-xs lg:text-sm leading-relaxed mb-3">
+              <p className="text-white/90 text-xs lg:text-sm leading-relaxed mb-3">
                 Conectamos empresas del sector minero y entidades financieras
                 con soluciones digitales de alto impacto, optimizando procesos
                 y asegurando eficiencia.
               </p>
             </div>
+          </div>
+
+          {/* Contenido debajo de la imagen (solo móviles) */}
+          <div className="block md:hidden p-4 bg-[#111827]">
+            <h2 className="text-sm font-bold text-white leading-tight mb-2">
+              Tecnología de{" "}
+              <span className="font-extrabold bg-gradient-to-r from-[#84458C] to-[#B49269] bg-clip-text text-transparent">
+                Vanguardia
+              </span>{" "}
+              para el sector minero.
+            </h2>
+            <p className="text-white/90 text-xs leading-relaxed">
+              Conectamos empresas del sector minero y entidades financieras
+              con soluciones digitales de alto impacto, optimizando procesos
+              y asegurando eficiencia.
+            </p>
           </div>
         </div>
       </FadeInUp>

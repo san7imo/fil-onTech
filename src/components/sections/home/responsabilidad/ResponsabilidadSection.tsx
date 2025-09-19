@@ -7,10 +7,11 @@ import Image from 'next/image';
 
 const ResponsabilidadSocialSection: React.FC = () => {
   const beneficios = [
-    { texto: "Capacitación de proveedores en legalidad, finanzas y tecnología." },
-    { texto: "Bancarización de zonas rurales." },
-    { texto: "Formalización del efectivo." },
-    { texto: "Formación en buenas prácticas mineras." }
+    { texto: "Educación." },
+    { texto: "Herramientas Financieras." },
+    { texto: "Herramientas Tecnológicas" },
+    { texto: "Comercio electronico" },
+    { texto: "Emprendimiento."}
   ];
 
   return (

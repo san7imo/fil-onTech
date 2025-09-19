@@ -10,8 +10,8 @@ export interface Service {
   name: string;
   title: string;
   description: string;
-  icon: LucideIcon; // ✅ ahora acepta un componente de Lucide
-  color: 'primary' | 'secondary' | 'tertiary';
+  icon: LucideIcon; // ✅ acepta un componente de Lucide
+  color: 'primary' | 'secondary' | 'tertiary' | 'quaternary'; // 👈 añadimos quaternary
   features: ServiceFeature[];
   backgroundGradient: string;
 }
@@ -24,7 +24,8 @@ export interface ServicesSection {
 
 // Enum para los colores de los servicios
 export enum ServiceColors {
-  PRIMARY = 'primary',    // Capital - Verde
-  SECONDARY = 'secondary', // Tech - Verde más claro
-  TERTIARY = 'tertiary'   // Guardian - Azul oscuro
+  PRIMARY = 'primary',     // Capital - Gris
+  SECONDARY = 'secondary', // Tech - Verde
+  TERTIARY = 'tertiary',   // Guardian - Azul
+  QUATERNARY = 'quaternary' // LegalTech - Morado
 }
