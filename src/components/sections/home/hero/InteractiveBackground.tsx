@@ -2,51 +2,49 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 interface InteractiveHeroBackgroundProps {
-  holdTime?: number;     // ms que permanece transparente al hover
-  cellSize?: number;     // px tamaño aproximado de cada cuadro
-  introDuration?: number;// ms que cada cuadro queda transparente en la animación inicial
-  introSpread?: number;  // ms que tarda la onda en llegar del centro a la esquina
+  holdTime?: number;  // ms
+  cellSize?: number;  // px
 }
 
 const InteractiveHeroBackground: React.FC<InteractiveHeroBackgroundProps> = ({
-  holdTime = 2000,
+  holdTime = 500,
   cellSize = 40,
-  introDuration = 4000,
-  introSpread = 900,
 }) => {
+  const startColor = [0, 128, 0];
+  const endColor = [210, 180, 140];
+
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const [rows, setRows] = useState(10);
+  const [columns, setColumns] = useState(20);
+  const [hovered, setHovered] = useState<boolean[][]>([]);
 
-  const [rows, setRows] = useState<number>(10);
-  const [columns, setColumns] = useState<number>(20);
-  const [hovered, setHovered] = useState<boolean[][]>(() => Array.from({ length: 10 }, () => Array(20).fill(false)));
-
-  // timeouts que mantienen las celdas encendidas
   const timersRef = useRef<Map<string, number>>(new Map());
-  // timeouts usados para programar la animación inicial (para poder limpiarlos)
-  const scheduledRef = useRef<number[]>([]);
-  // rAF throttle para pointermove
-  const rafRef = useRef<number | null>(null);
-  const lastPointer = useRef<{ x: number; y: number } | null>(null);
+  const inactivityTimerRef = useRef<number | null>(null);
+  const randomIntervalRef = useRef<number | null>(null);
 
-  // función que enciende (hace transparente) una celda y programa su apagado
+  const getColorForColumn = (col: number) => {
+    const ratio = columns > 1 ? col / (columns - 1) : 0;
+    const r = Math.round(startColor[0] + (endColor[0] - startColor[0]) * ratio);
+    const g = Math.round(startColor[1] + (endColor[1] - startColor[1]) * ratio);
+    const b = Math.round(startColor[2] + (endColor[2] - startColor[2]) * ratio);
+    return `rgb(${r}, ${g}, ${b})`;
+  };
+
   const lightCell = (row: number, col: number, duration = holdTime) => {
     if (row < 0 || col < 0 || row >= rows || col >= columns) return;
     const key = `${row}-${col}`;
 
     setHovered(prev => {
-      // copy-on-write
       const copy = prev.map(r => [...r]);
-      if (!copy[row]) return prev;
-      copy[row][col] = true;
+      if (copy[row]) copy[row][col] = true;
       return copy;
     });
 
-    // resetear timeout si existe
     if (timersRef.current.has(key)) {
       clearTimeout(timersRef.current.get(key)!);
     }
 
-    const id = window.setTimeout(() => {
+    const to = window.setTimeout(() => {
       setHovered(prev => {
         const copy = prev.map(r => [...r]);
         if (copy[row]) copy[row][col] = false;
@@ -55,123 +53,98 @@ const InteractiveHeroBackground: React.FC<InteractiveHeroBackgroundProps> = ({
       timersRef.current.delete(key);
     }, duration);
 
-    timersRef.current.set(key, id);
+    timersRef.current.set(key, to);
   };
 
-  // recalcular filas/columnas según tamaño del contenedor (cellSize define tamaño aproximado)
+  // 🔹 Recalcular grid
   useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-
+    if (!containerRef.current) return;
     const updateGrid = () => {
-      const rect = el.getBoundingClientRect();
+      const rect = containerRef.current!.getBoundingClientRect();
       const newColumns = Math.max(1, Math.floor(rect.width / cellSize));
       const newRows = Math.max(1, Math.floor(rect.height / cellSize));
-      setColumns(prev => (prev === newColumns ? prev : newColumns));
-      setRows(prev => (prev === newRows ? prev : newRows));
+      setColumns(newColumns);
+      setRows(newRows);
       setHovered(Array.from({ length: newRows }, () => Array(newColumns).fill(false)));
-
-      // limpiar timers previos (evitar timeouts colgando entre cambios de tamaño)
-      timersRef.current.forEach(t => clearTimeout(t));
-      timersRef.current.clear();
     };
-
     updateGrid();
-    const ro = new ResizeObserver(updateGrid);
-    ro.observe(el);
-
-    return () => ro.disconnect();
+    const resizeObserver = new ResizeObserver(updateGrid);
+    resizeObserver.observe(containerRef.current);
+    return () => resizeObserver.disconnect();
   }, [cellSize]);
 
-  // pointermove global con throttle por rAF
+  // 🔹 Hover
   useEffect(() => {
-    const handlePointer = (e: PointerEvent) => {
-      lastPointer.current = { x: e.clientX, y: e.clientY };
-      if (rafRef.current !== null) return;
-      rafRef.current = requestAnimationFrame(() => {
-        rafRef.current = null;
-        const rect = containerRef.current?.getBoundingClientRect();
-        if (!rect || !lastPointer.current) return;
-        const x = lastPointer.current.x - rect.left;
-        const y = lastPointer.current.y - rect.top;
-        if (x < 0 || y < 0 || x > rect.width || y > rect.height) return;
-
-        const col = Math.min(columns - 1, Math.max(0, Math.floor((x / rect.width) * columns)));
-        const row = Math.min(rows - 1, Math.max(0, Math.floor((y / rect.height) * rows)));
-        lightCell(row, col);
-      });
+    const onPointerMove = (e: PointerEvent) => {
+      resetInactivityTimer();
+      const rect = containerRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      if (x < 0 || y < 0 || x > rect.width || y > rect.height) return;
+      const col = Math.min(columns - 1, Math.max(0, Math.floor((x / rect.width) * columns)));
+      const row = Math.min(rows - 1, Math.max(0, Math.floor((y / rect.height) * rows)));
+      lightCell(row, col);
     };
-
-    document.addEventListener('pointermove', handlePointer, { passive: true });
-    return () => {
-      document.removeEventListener('pointermove', handlePointer);
-      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
-    };
+    document.addEventListener('pointermove', onPointerMove, { passive: true });
+    return () => document.removeEventListener('pointermove', onPointerMove);
   }, [rows, columns, holdTime]);
 
-  // animación inicial: onda radial desde el centro
+  // 🔹 Animación inicial (más cuadros)
   useEffect(() => {
-    // limpiar scheduled previos
-    scheduledRef.current.forEach(s => clearTimeout(s));
-    scheduledRef.current.length = 0;
-    timersRef.current.forEach(t => clearTimeout(t));
-    timersRef.current.clear();
-
     if (rows === 0 || columns === 0) return;
-
-    const centerRow = (rows - 1) / 2;
-    const centerCol = (columns - 1) / 2;
-
-    // calcular distancia máxima para normalizar delays
-    let maxDist = 0;
-    for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < columns; c++) {
-        const d = Math.hypot(r - centerRow, c - centerCol);
-        if (d > maxDist) maxDist = d;
-      }
+    for (let i = 0; i < 20; i++) { // 20 "destellos"
+      setTimeout(() => {
+        const count = 5 + Math.floor(Math.random() * 6); // 5–10 cuadros a la vez
+        for (let j = 0; j < count; j++) {
+          const row = Math.floor(Math.random() * rows);
+          const col = Math.floor(Math.random() * columns);
+          lightCell(row, col, 800);
+        }
+      }, Math.random() * 2000); // en los primeros 2s
     }
+  }, [rows, columns]);
 
-    // programar cada celda según su distancia relativa al centro
-    for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < columns; c++) {
-        const dist = Math.hypot(r - centerRow, c - centerCol);
-        const delay = maxDist === 0 ? 0 : Math.round((dist / maxDist) * introSpread);
-
-        const sid = window.setTimeout(() => {
-          // la animación inicial hace que la celda quede transparente por introDuration ms
-          lightCell(r, c, introDuration);
-        }, delay);
-
-        scheduledRef.current.push(sid);
-      }
+  // 🔹 Inactividad → parpadeo aleatorio con más cuadros
+const startRandomBlinking = () => {
+  if (randomIntervalRef.current) return;
+  randomIntervalRef.current = window.setInterval(() => {
+    const count = 10 + Math.floor(Math.random() * 11); // 10–20 cuadros por ráfaga
+    for (let i = 0; i < count; i++) {
+      const row = Math.floor(Math.random() * rows);
+      const col = Math.floor(Math.random() * columns);
+      lightCell(row, col, 1200); // se mantienen un poco más de tiempo
     }
+  }, 300); // cada 300ms
+};
 
-    // cleanup parcial si cambian rows/columns
-    return () => {
-      scheduledRef.current.forEach(s => clearTimeout(s));
-      scheduledRef.current.length = 0;
-      timersRef.current.forEach(t => clearTimeout(t));
-      timersRef.current.clear();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rows, columns, introDuration, introSpread]); // cellSize cambia rows/columns y provocará re-run
+  const stopRandomBlinking = () => {
+    if (randomIntervalRef.current) {
+      clearInterval(randomIntervalRef.current);
+      randomIntervalRef.current = null;
+    }
+  };
 
-  // limpiar todo al desmontar
+  const resetInactivityTimer = () => {
+    if (inactivityTimerRef.current) clearTimeout(inactivityTimerRef.current);
+    stopRandomBlinking();
+    inactivityTimerRef.current = window.setTimeout(() => {
+      startRandomBlinking();
+    }, 2000); // 2s sin mover el mouse
+  };
+
   useEffect(() => {
+    resetInactivityTimer();
     return () => {
-      scheduledRef.current.forEach(s => clearTimeout(s));
-      timersRef.current.forEach(t => clearTimeout(t));
-      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
-      scheduledRef.current.length = 0;
-      timersRef.current.clear();
+      if (inactivityTimerRef.current) clearTimeout(inactivityTimerRef.current);
+      if (randomIntervalRef.current) clearInterval(randomIntervalRef.current);
     };
   }, []);
 
   return (
     <div
       ref={containerRef}
-      /* IMPORTANTE: NO poner bg-black aquí: las celdas transparentes deben mostrar la imagen debajo */
-      className="absolute inset-0 grid"
+      className="absolute inset-0 grid bg-black"
       style={{
         gridTemplateRows: `repeat(${rows}, 1fr)`,
         gridTemplateColumns: `repeat(${columns}, 1fr)`,
@@ -182,19 +155,13 @@ const InteractiveHeroBackground: React.FC<InteractiveHeroBackgroundProps> = ({
       {Array.from({ length: rows * columns }).map((_, index) => {
         const row = Math.floor(index / columns);
         const col = index % columns;
-        const isOn = !!hovered[row]?.[col];
-
+        const color = getColorForColumn(col);
         return (
           <div
             key={index}
-            className="w-full h-full transition-opacity duration-700 border border-neutral-900/60 box-border"
+            className="w-full h-full transition-colors duration-300"
             style={{
-              // usamos opacity para mostrar la imagen debajo (0 => transparente),
-              // y background negro como estado por defecto (1 => cubre la imagen)
-              backgroundColor: 'black',
-              opacity: isOn ? 0 : 1,
-              willChange: 'opacity',
-              WebkitTransform: 'translateZ(0)', // pequeño hack para mejorar render
+              backgroundColor: hovered[row]?.[col] ? color : 'black',
             }}
           />
         );

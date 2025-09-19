@@ -113,7 +113,7 @@ const Footer = () => {
                   ¿Listo para transformar tu negocio?
                 </h4>
                 <p className="text-sm text-gray-300 mb-3">
-                  Únete a la revolución tecnológica minera
+                  Únete a la revolución tecnológica agrominera cripto.
                 </p>
                 <Link
                   href="/contacto"

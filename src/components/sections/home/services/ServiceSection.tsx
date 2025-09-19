@@ -44,16 +44,16 @@ const ServicesSection: React.FC = () => {
             </FadeInUp>
           </header>
 
-          {/* Cards */}
-          <div className="flex justify-center mb-20">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {servicesData.services.map((service: Service, index: number) => (
-                <FadeInUp key={service.id} delay={0.2 * index}>
-                  <ServiceCard service={service} index={index} />
-                </FadeInUp>
-              ))}
-            </div>
-          </div>
+{/* Cards */}
+<div className="flex justify-center mb-20">
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-7xl px-2">
+    {servicesData.services.map((service: Service, index: number) => (
+      <FadeInUp key={service.id} delay={0.2 * index}>
+        <ServiceCard service={service} index={index} />
+      </FadeInUp>
+    ))}
+  </div>
+</div>
 
           {/* CTA mejorado */}
           <FadeInUp delay={0.6}>
