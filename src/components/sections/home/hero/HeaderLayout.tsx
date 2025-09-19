@@ -28,11 +28,8 @@ const HeaderLayout = () => {
       </div>
 
       {/* Fondo interactivo de cuadros */}
-      <InteractiveHeroBackground
-        rows={12}
-        columns={24}
-        holdTime={500}
-      />
+  <InteractiveHeroBackground holdTime={500} cellSize={40} />
+
 
       {/* Contenido */}
       <div className="relative z-10">
