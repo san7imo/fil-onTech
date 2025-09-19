@@ -64,7 +64,7 @@ export const SERVICES: Service[] = [
     color: 'guardian',
     icon: 'shield',
   },
-    {
+  {
     id: 'legaltech',
     name: 'LegalTech',
     title: 'Fil-On LegalTech',

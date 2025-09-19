@@ -20,7 +20,7 @@ const HeroSection = () => {
 
           {/* Descripción */}
           <p className="text-base md:text-lg text-white mb-8 max-w-xl leading-relaxed font-medium">
-Promovemos la inclusión del sector minero en el sistema financiero, ofreciendo soluciones innovadoras que impulsan el crecimiento, fortalecen la seguridad y fomentan la cooperación para un futuro sostenible.
+Transformamos la minería y la agroindustria con soluciones financieras y tecnológicas innovadoras, promoviendo la inclusión y construyendo un futuro sostenible para los mercados emergentes.
           </p>
 
           {/* Botones de acción */}
