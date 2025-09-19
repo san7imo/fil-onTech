@@ -64,6 +64,20 @@ export const SERVICES: Service[] = [
     color: 'guardian',
     icon: 'shield',
   },
+  {
+    id: 'legaltech',
+    name: 'LegalTech',
+    title: 'Fil-On LegalTech',
+    description: 'Cumplimiento inteligente y soluciones legales digitales para el sector minero',
+    features: [
+      'Compliance digital',
+      'Contratos inteligentes',
+      'Prevención de riesgos legales',
+      'Asesoría regulatoria',
+    ],
+    color: 'legaltech',
+    icon: 'scale',
+  },
 ] as const;
 
 // Estadísticas del sector minero (basado en los PDFs)
