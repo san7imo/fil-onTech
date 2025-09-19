@@ -6,9 +6,9 @@ export const COMPANY_INFO = {
   tagline: 'Fintech Agrominera',
   description: 'Transformamos la industria minera a través de soluciones financieras innovadoras, uniendo tecnología de vanguardia con el poder de la cooperación.',
   mission: 'Crear productos especializados financieros y comerciales, que faciliten la comercialización, apertura de mercados, inversión y financiación del ecosistema empresarial de minerales preciosos en Latinoamérica.',
-  email: 'contacto.filontech@gmail.com',
+  email: 'contacto@fil-ontech.com ',
   website: 'www.fil-ontech.com',
-  phone: '+57 300 123 4567', // Placeholder - agregar número real
+  phone: '+57 318 329 37 59', // Placeholder - agregar número real
 } as const;
 
 // Navegación principal

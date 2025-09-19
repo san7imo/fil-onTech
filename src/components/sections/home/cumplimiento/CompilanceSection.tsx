@@ -24,7 +24,7 @@ const ComplianceSection: React.FC = () => {
           <div className="flex justify-center">
             <div className="backdrop-blur-[3px] bg-gradient-to-b from-white/5 to-transparent px-5 py-2.5 rounded-lg shadow-sm">
               <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white drop-shadow text-center">
-                Cumplimiento y control
+                Cumplimiento y Trazabilidad.
               </h2>
             </div>
           </div>
@@ -33,7 +33,7 @@ const ComplianceSection: React.FC = () => {
           <div className="flex justify-center">
             <div className="backdrop-blur-[3px] bg-gradient-to-b from-white/5 to-transparent px-4 py-2 rounded-lg shadow-sm max-w-2xl">
               <p className="text-sm sm:text-base text-white/90 leading-relaxed text-center">
-                Trabajamos para que cada proveedor y aliado crezca con seguridad y confianza.
+                Trabajamos para que cada cliente proveedor y aliado crezcan con seguridad y transparencia
               </p>
             </div>
           </div>
