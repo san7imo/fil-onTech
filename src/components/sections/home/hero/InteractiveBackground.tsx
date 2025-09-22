@@ -56,7 +56,7 @@ const InteractiveHeroBackground: React.FC<InteractiveHeroBackgroundProps> = ({
     timersRef.current.set(key, to);
   };
 
-  // 🔹 Recalcular grid
+  // 🔹 Recalcular grid dinámicamente
   useEffect(() => {
     if (!containerRef.current) return;
     const updateGrid = () => {
@@ -73,7 +73,7 @@ const InteractiveHeroBackground: React.FC<InteractiveHeroBackgroundProps> = ({
     return () => resizeObserver.disconnect();
   }, [cellSize]);
 
-  // 🔹 Hover
+  // 🔹 Hover (movimiento del mouse)
   useEffect(() => {
     const onPointerMove = (e: PointerEvent) => {
       resetInactivityTimer();
@@ -90,10 +90,10 @@ const InteractiveHeroBackground: React.FC<InteractiveHeroBackgroundProps> = ({
     return () => document.removeEventListener('pointermove', onPointerMove);
   }, [rows, columns, holdTime]);
 
-  // 🔹 Animación inicial (más cuadros)
+  // 🔹 Animación inicial (efecto “destellos”)
   useEffect(() => {
     if (rows === 0 || columns === 0) return;
-    for (let i = 0; i < 20; i++) { // 20 "destellos"
+    for (let i = 0; i < 20; i++) {
       setTimeout(() => {
         const count = 5 + Math.floor(Math.random() * 6); // 5–10 cuadros a la vez
         for (let j = 0; j < count; j++) {
@@ -101,22 +101,22 @@ const InteractiveHeroBackground: React.FC<InteractiveHeroBackgroundProps> = ({
           const col = Math.floor(Math.random() * columns);
           lightCell(row, col, 800);
         }
-      }, Math.random() * 2000); // en los primeros 2s
+      }, Math.random() * 2000);
     }
   }, [rows, columns]);
 
-  // 🔹 Inactividad → parpadeo aleatorio con más cuadros
-const startRandomBlinking = () => {
-  if (randomIntervalRef.current) return;
-  randomIntervalRef.current = window.setInterval(() => {
-    const count = 10 + Math.floor(Math.random() * 11); // 10–20 cuadros por ráfaga
-    for (let i = 0; i < count; i++) {
-      const row = Math.floor(Math.random() * rows);
-      const col = Math.floor(Math.random() * columns);
-      lightCell(row, col, 1200); // se mantienen un poco más de tiempo
-    }
-  }, 300); // cada 300ms
-};
+  // 🔹 Inactividad → parpadeo aleatorio
+  const startRandomBlinking = () => {
+    if (randomIntervalRef.current) return;
+    randomIntervalRef.current = window.setInterval(() => {
+      const count = 10 + Math.floor(Math.random() * 11); // 10–20 cuadros
+      for (let i = 0; i < count; i++) {
+        const row = Math.floor(Math.random() * rows);
+        const col = Math.floor(Math.random() * columns);
+        lightCell(row, col, 1200);
+      }
+    }, 300); // cada 300ms
+  };
 
   const stopRandomBlinking = () => {
     if (randomIntervalRef.current) {
@@ -156,12 +156,15 @@ const startRandomBlinking = () => {
         const row = Math.floor(index / columns);
         const col = index % columns;
         const color = getColorForColumn(col);
+        const isLit = hovered[row]?.[col];
+
         return (
           <div
             key={index}
-            className="w-full h-full transition-colors duration-300"
+            className="w-full h-full transition-colors duration-800 ease-in-out"
             style={{
-              backgroundColor: hovered[row]?.[col] ? color : 'black',
+              backgroundColor: isLit ? color : 'black',
+              border: `1px solid ${isLit ? 'black' : 'transparent'}`, // 🔹 borde fino solo cuando se ilumina
             }}
           />
         );

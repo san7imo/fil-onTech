@@ -9,10 +9,11 @@ import InteractiveHeroBackground from './InteractiveBackground';
 const HeaderLayout = () => {
   return (
     <div className="relative min-h-screen overflow-hidden">
-
       {/* Fondo interactivo de cuadros */}
-  <InteractiveHeroBackground holdTime={500} cellSize={70} />
+      <InteractiveHeroBackground holdTime={500} cellSize={50} />
 
+      {/* Overlay oscuro */}
+      <div className="absolute inset-0 bg-black/40 z-0" />
 
       {/* Contenido */}
       <div className="relative z-10">
