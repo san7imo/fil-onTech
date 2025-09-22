@@ -13,17 +13,13 @@ const LogoHeader = ({ bgGradient }: { bgColor?: string; bgGradient?: string }) =
         background: bgGradient || undefined,
       }}
     >
-      {/* Línea izquierda */}
-      <div className="absolute left-0 top-[37.7%] h-[2px] bg-white w-1/2 z-0" />
-      {/* Línea derecha */}
-      <div className="absolute right-0 top-[28.5%] h-[2px] bg-white w-1/2 z-0" />
 
       {/* Logo */}
       <div className="flex justify-center relative z-10">
         <Image
-          src="/images/logo.webp"
+          src="/images/logo1.webp"
           alt="Fil-On Tech"
-          width={75}
+          width={255}
           height={55}
           className="object-contain filter brightness-0 invert"
           priority

@@ -10,7 +10,7 @@ const LogoHeader = () => {
 <div className="absolute left-0 top-[34.5%] h-[5px] bg-white w-1/2 z-10" />
 
 {/* Línea derecha */}
-<div className="absolute right-0 top-[22.5%] h-[5px] bg-white w-1/2 z-10" />
+<div className="absolute right-0 top-[22.5%] h-[5px] bg-white w-51/100 z-10" />
 
 
       {/* Container para el logo */}
