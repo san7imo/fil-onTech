@@ -1,58 +1,79 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container } from '@/components/ui';
 import FadeInUp from '@/components/ui/animations/FadeInUp';
 import Image from 'next/image';
 
+const images = [
+  '/images/responsabilidad.webp',
+  '/images/responsabilidad1.webp',
+  '/images/responsabilidad2.webp',
+  '/images/responsabilidad3.webp',
+];
+
 const ResponsabilidadSocialSection: React.FC = () => {
   const beneficios = [
-    { texto: "Educación." },
-    { texto: "Herramientas Financieras." },
-    { texto: "Herramientas Tecnológicas" },
-    { texto: "Comercio electronico" },
-    { texto: "Emprendimiento."}
+    { texto: 'Educación.' },
+    { texto: 'Herramientas Financieras.' },
+    { texto: 'Herramientas Tecnológicas' },
+    { texto: 'Comercio electrónico' },
+    { texto: 'Emprendimiento.' },
   ];
+
+  const [current, setCurrent] = useState(0);
+
+  // Rotar imágenes cada 3s
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % images.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <section className="relative overflow-hidden pt-32 pb-20 px-4">
-      {/* Fondo armonizado y coherente */}
+      {/* Fondo armonizado */}
       <div className="absolute inset-0 z-0">
-        {/* Gradiente base oscuro */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#0F1112] via-[#0F1112] to-[#0F1112]" />
-        {/* Overlays sutiles para profundidad */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(132,69,140,0.06)_0%,transparent_70%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(180,146,105,0.05)_0%,transparent_70%)]" />
-        {/* Textura sutil tipo grid */}
         <div className="absolute inset-0 opacity-[0.02] bg-[linear-gradient(to_right,#222_1px,transparent_1px),linear-gradient(to_bottom,#222_1px,transparent_1px)] bg-[size:24px_24px]" />
       </div>
 
       <Container>
         <div className="relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            
-            {/* Columna izquierda - Imagen */}
+            {/* Columna izquierda - Stack de imágenes */}
             <FadeInUp delay={0.2}>
-              <div className="relative">
-                <div
-                  className="relative w-full aspect-square max-w-md mx-auto lg:mx-0 
-                             overflow-hidden rounded-2xl transition-all duration-500 
-                             hover:scale-[1.02] hover:shadow-2xl hover:shadow-[#6A7C6F]/30
-                             ring-1 ring-[#6A7C6F]/20 hover:ring-[#84458C]/30"
-                >
-                  <Image
-                    src="/images/responsabilidad.png"
-                    alt="Mujer sonriente representando responsabilidad social"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
-                  {/* Overlay decorativo FO mejorado */}
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-
-                  </div>
-                  {/* Overlay sutil para mejor integración */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1A261E]/20 to-transparent" />
+              <div className="relative w-full aspect-square max-w-md mx-auto lg:mx-0">
+                <div className="relative w-full h-full">
+                  {images.map((src, index) => {
+                    // calcular desplazamiento detrás de la principal
+                    const offset = (index - current + images.length) % images.length;
+                    return (
+                      <div
+                        key={index}
+                        className={`absolute inset-0 rounded-2xl overflow-hidden transition-all duration-700`}
+                        style={{
+                          transform: `translate(${offset * 12}px, ${offset * 12}px) scale(${
+                            offset === 0 ? 1 : 0.95
+                          })`,
+                          opacity: offset > 2 ? 0 : 1,
+                          zIndex: images.length - offset,
+                        }}
+                      >
+                        <Image
+                          src={src}
+                          alt={`Responsabilidad social ${index + 1}`}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#1A261E]/20 to-transparent" />
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </FadeInUp>
@@ -67,12 +88,12 @@ const ResponsabilidadSocialSection: React.FC = () => {
                   <p className="text-lg text-gray-300 leading-relaxed mb-8 font-medium">
                     Creemos en las personas como motor de transformación. Por eso, en{' '}
                     <span className="font-bold text-white">FIL-ON</span>{' '}
-                    llevamos educación, inclusión financiera y prácticas responsables a las comunidades rurales para que crezcan de manera justa y sostenible.
+                    llevamos educación, inclusión financiera y prácticas responsables a las
+                    comunidades rurales para que crezcan de manera justa y sostenible.
                   </p>
                 </div>
               </FadeInUp>
 
-              {/* Lista de beneficios mejorada */}
               <FadeInUp delay={0.4}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {beneficios.map((beneficio, index) => (
@@ -93,7 +114,6 @@ const ResponsabilidadSocialSection: React.FC = () => {
                 </div>
               </FadeInUp>
 
-              {/* CTA adicional para coherencia */}
               <FadeInUp delay={0.5}>
                 <div className="pt-4">
                   <button

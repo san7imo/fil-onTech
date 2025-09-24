@@ -10,9 +10,10 @@ const HeroSection = () => {
         <div className="max-w-3xl">
           {/* Título principal */}
           <div className="mb-6">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight tracking-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight tracking-tight"
+            style={{ textShadow: '1px 1px 2px rgba(255, 255, 255)' }}>
               FINTECH{' '}
-              <span className="text-emerald-400">
+              <span className="text-[#84458C]">
                 AGROMINERA
               </span>
             </h1>
@@ -29,7 +30,7 @@ Promovemos la inclusión del sector minero en el sistema financiero, ofreciendo 
               variant="primary"
               size="lg"
               href="/servicios"
-              className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-6 py-3 rounded-full text-sm md:text-base"
+              className="bg-[#84458C] hover:bg-[#552d5a] text-white font-semibold px-6 py-3 rounded-full text-sm md:text-base"
             >
               Conocer servicios
             </Button>
@@ -51,7 +52,7 @@ Promovemos la inclusión del sector minero en el sistema financiero, ofreciendo 
                 <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-1">
                   {value}
                 </h3>
-                <div className="w-8 h-px bg-emerald-400 mx-auto md:mx-0"></div>
+                <div className="w-8 h-px bg-[#84458C] mx-auto md:mx-0"></div>
               </div>
             ))}
           </div>

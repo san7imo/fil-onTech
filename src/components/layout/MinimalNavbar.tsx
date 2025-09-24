@@ -53,7 +53,7 @@ const MinimalNavbar = () => {
                       className={cn(
                         'flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 relative',
                         active
-                          ? 'text-white bg-emerald-500/80'
+                          ? 'text-white bg-[#84458C]'
                           : 'text-white/80 hover:text-white hover:bg-white/10'
                       )}
                     >
@@ -100,7 +100,7 @@ const MinimalNavbar = () => {
                         className={cn(
                           'flex items-center space-x-3 px-4 py-3 rounded-xl text-base font-medium transition-colors duration-200 w-full',
                           active
-                            ? 'text-white bg-emerald-500/80'
+                            ? 'text-white bg-[#84458C]'
                             : 'text-white/80 hover:text-white hover:bg-white/10'
                         )}
                       >

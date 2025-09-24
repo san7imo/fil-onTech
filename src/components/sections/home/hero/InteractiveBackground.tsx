@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 
 interface InteractiveHeroBackgroundProps {
   holdTime?: number;  // ms
@@ -22,54 +22,64 @@ const InteractiveHeroBackground: React.FC<InteractiveHeroBackgroundProps> = ({
   const inactivityTimerRef = useRef<number | null>(null);
   const randomIntervalRef = useRef<number | null>(null);
 
-  const getColorForColumn = (col: number) => {
-    const ratio = columns > 1 ? col / (columns - 1) : 0;
-    const r = Math.round(startColor[0] + (endColor[0] - startColor[0]) * ratio);
-    const g = Math.round(startColor[1] + (endColor[1] - startColor[1]) * ratio);
-    const b = Math.round(startColor[2] + (endColor[2] - startColor[2]) * ratio);
-    return `rgb(${r}, ${g}, ${b})`;
-  };
+  const getColorForColumn = useCallback(
+    (col: number) => {
+      const ratio = columns > 1 ? col / (columns - 1) : 0;
+      const r = Math.round(startColor[0] + (endColor[0] - startColor[0]) * ratio);
+      const g = Math.round(startColor[1] + (endColor[1] - startColor[1]) * ratio);
+      const b = Math.round(startColor[2] + (endColor[2] - startColor[2]) * ratio);
+      return `rgb(${r}, ${g}, ${b})`;
+    },
+    [columns]
+  );
 
-  const lightCell = (row: number, col: number, duration = holdTime) => {
-    if (row < 0 || col < 0 || row >= rows || col >= columns) return;
-    const key = `${row}-${col}`;
+  const lightCell = useCallback(
+    (row: number, col: number, duration = holdTime) => {
+      if (row < 0 || col < 0 || row >= rows || col >= columns) return;
+      const key = `${row}-${col}`;
 
-    setHovered(prev => {
-      const copy = prev.map(r => [...r]);
-      if (copy[row]) copy[row][col] = true;
-      return copy;
-    });
-
-    if (timersRef.current.has(key)) {
-      clearTimeout(timersRef.current.get(key)!);
-    }
-
-    const to = window.setTimeout(() => {
       setHovered(prev => {
         const copy = prev.map(r => [...r]);
-        if (copy[row]) copy[row][col] = false;
+        if (copy[row]) copy[row][col] = true;
         return copy;
       });
-      timersRef.current.delete(key);
-    }, duration);
 
-    timersRef.current.set(key, to);
-  };
+      if (timersRef.current.has(key)) {
+        clearTimeout(timersRef.current.get(key)!);
+      }
+
+      const to = window.setTimeout(() => {
+        setHovered(prev => {
+          const copy = prev.map(r => [...r]);
+          if (copy[row]) copy[row][col] = false;
+          return copy;
+        });
+        timersRef.current.delete(key);
+      }, duration);
+
+      timersRef.current.set(key, to);
+    },
+    [rows, columns, holdTime]
+  );
 
   // 🔹 Recalcular grid dinámicamente
   useEffect(() => {
     if (!containerRef.current) return;
+
     const updateGrid = () => {
-      const rect = containerRef.current!.getBoundingClientRect();
+      if (!containerRef.current) return; // ✅ prevención null
+      const rect = containerRef.current.getBoundingClientRect();
       const newColumns = Math.max(1, Math.floor(rect.width / cellSize));
       const newRows = Math.max(1, Math.floor(rect.height / cellSize));
       setColumns(newColumns);
       setRows(newRows);
       setHovered(Array.from({ length: newRows }, () => Array(newColumns).fill(false)));
     };
+
     updateGrid();
     const resizeObserver = new ResizeObserver(updateGrid);
     resizeObserver.observe(containerRef.current);
+
     return () => resizeObserver.disconnect();
   }, [cellSize]);
 
@@ -86,16 +96,17 @@ const InteractiveHeroBackground: React.FC<InteractiveHeroBackgroundProps> = ({
       const row = Math.min(rows - 1, Math.max(0, Math.floor((y / rect.height) * rows)));
       lightCell(row, col);
     };
+
     document.addEventListener('pointermove', onPointerMove, { passive: true });
     return () => document.removeEventListener('pointermove', onPointerMove);
-  }, [rows, columns, holdTime]);
+  }, [rows, columns, lightCell]);
 
   // 🔹 Animación inicial (efecto “destellos”)
   useEffect(() => {
     if (rows === 0 || columns === 0) return;
     for (let i = 0; i < 20; i++) {
       setTimeout(() => {
-        const count = 5 + Math.floor(Math.random() * 6); // 5–10 cuadros a la vez
+        const count = 5 + Math.floor(Math.random() * 6);
         for (let j = 0; j < count; j++) {
           const row = Math.floor(Math.random() * rows);
           const col = Math.floor(Math.random() * columns);
@@ -103,35 +114,35 @@ const InteractiveHeroBackground: React.FC<InteractiveHeroBackgroundProps> = ({
         }
       }, Math.random() * 2000);
     }
-  }, [rows, columns]);
+  }, [rows, columns, lightCell]);
 
   // 🔹 Inactividad → parpadeo aleatorio
-  const startRandomBlinking = () => {
+  const startRandomBlinking = useCallback(() => {
     if (randomIntervalRef.current) return;
     randomIntervalRef.current = window.setInterval(() => {
-      const count = 10 + Math.floor(Math.random() * 11); // 10–20 cuadros
+      const count = 10 + Math.floor(Math.random() * 11);
       for (let i = 0; i < count; i++) {
         const row = Math.floor(Math.random() * rows);
         const col = Math.floor(Math.random() * columns);
         lightCell(row, col, 1200);
       }
-    }, 300); // cada 300ms
-  };
+    }, 300);
+  }, [rows, columns, lightCell]);
 
-  const stopRandomBlinking = () => {
+  const stopRandomBlinking = useCallback(() => {
     if (randomIntervalRef.current) {
       clearInterval(randomIntervalRef.current);
       randomIntervalRef.current = null;
     }
-  };
+  }, []);
 
-  const resetInactivityTimer = () => {
+  const resetInactivityTimer = useCallback(() => {
     if (inactivityTimerRef.current) clearTimeout(inactivityTimerRef.current);
     stopRandomBlinking();
     inactivityTimerRef.current = window.setTimeout(() => {
       startRandomBlinking();
-    }, 2000); // 2s sin mover el mouse
-  };
+    }, 2000);
+  }, [stopRandomBlinking, startRandomBlinking]);
 
   useEffect(() => {
     resetInactivityTimer();
@@ -139,7 +150,7 @@ const InteractiveHeroBackground: React.FC<InteractiveHeroBackgroundProps> = ({
       if (inactivityTimerRef.current) clearTimeout(inactivityTimerRef.current);
       if (randomIntervalRef.current) clearInterval(randomIntervalRef.current);
     };
-  }, []);
+  }, [resetInactivityTimer]);
 
   return (
     <div
@@ -164,7 +175,7 @@ const InteractiveHeroBackground: React.FC<InteractiveHeroBackgroundProps> = ({
             className="w-full h-full transition-colors duration-800 ease-in-out"
             style={{
               backgroundColor: isLit ? color : 'black',
-              border: `1px solid ${isLit ? 'black' : 'transparent'}`, // 🔹 borde fino solo cuando se ilumina
+              border: `1px solid ${isLit ? 'black' : 'transparent'}`,
             }}
           />
         );
