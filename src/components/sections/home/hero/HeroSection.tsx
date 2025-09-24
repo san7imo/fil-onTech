@@ -13,9 +13,8 @@ const HeroSection = () => {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight tracking-tight"
             style={{ textShadow: '1px 1px 2px rgba(255, 255, 255)' }}>
               FINTECH{' '}
-              <span className="text-[#84458C]">
                 AGROMINERA
-              </span>
+              
             </h1>
           </div>
 
@@ -30,7 +29,7 @@ Transformamos la minería y la agroindustria con soluciones financieras y tecnol
               variant="primary"
               size="lg"
               href="/servicios"
-              className="bg-[#84458C] hover:bg-[#552d5a] text-white font-semibold px-6 py-3 rounded-full text-sm md:text-base"
+              className="bg-[#ffffff] hover:bg-[#552d5a] text-black font-semibold px-6 py-3 rounded-full text-sm md:text-base"
             >
               Conocer servicios
             </Button>

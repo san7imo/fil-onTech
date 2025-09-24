@@ -4,7 +4,12 @@ import './globals.css';
 import { COMPANY_INFO } from '@/lib/constants';
 import Footer from '@/components/layout/Footer';
 
-const inter = Inter({ subsets: ['latin'] });
+// Fuente principal: Inter (todos los pesos)
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  variable: '--font-inter',
+});
 
 export const metadata: Metadata = {
   title: {
@@ -73,9 +78,9 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="es" className="scroll-smooth">
-      <body className={`${inter.className} antialiased`}>
-        <div className="min-h-screen flex flex-col bg-[#0F1112]">
+    <html lang="es" className={`${inter.variable} scroll-smooth`}>
+      <body className="font-sans antialiased bg-[#0F1112] text-white">
+        <div className="min-h-screen flex flex-col">
           {/* Contenido dinámico de cada página */}
           <main className="flex-grow">{children}</main>
 
