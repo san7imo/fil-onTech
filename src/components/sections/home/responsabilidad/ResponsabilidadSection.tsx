@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Container } from '@/components/ui';
 import FadeInUp from '@/components/ui/animations/FadeInUp';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 const images = [
   '/images/responsabilidad.webp',
@@ -16,24 +17,24 @@ const ResponsabilidadSocialSection: React.FC = () => {
   const beneficios = [
     { texto: 'Educación.' },
     { texto: 'Herramientas Financieras.' },
-    { texto: 'Herramientas Tecnológicas' },
-    { texto: 'Comercio electrónico' },
+    { texto: 'Herramientas Tecnológicas.' },
+    { texto: 'Comercio electrónico.' },
     { texto: 'Emprendimiento.' },
   ];
 
   const [current, setCurrent] = useState(0);
 
-  // Rotar imágenes cada 3s
+  // Rotar imágenes cada 4s
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % images.length);
-    }, 3000);
+    }, 4000);
     return () => clearInterval(interval);
   }, []);
 
   return (
     <section className="relative overflow-hidden pt-32 pb-20 px-4">
-      {/* Fondo armonizado */}
+      {/* Fondo */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-b from-[#0F1112] via-[#0F1112] to-[#0F1112]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(132,69,140,0.06)_0%,transparent_70%)]" />
@@ -44,34 +45,42 @@ const ResponsabilidadSocialSection: React.FC = () => {
       <Container>
         <div className="relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            {/* Columna izquierda - Stack de imágenes */}
+            {/* Columna izquierda - Baraja */}
             <FadeInUp delay={0.2}>
-              <div className="relative w-full aspect-square max-w-md mx-auto lg:mx-0">
-                <div className="relative w-full h-full">
+              <div className="relative w-full max-w-md mx-auto lg:mx-0 rounded-2xl">
+                <div className="relative w-full aspect-[4/5]">
                   {images.map((src, index) => {
-                    // calcular desplazamiento detrás de la principal
+                    // Calcular posición relativa (offset dentro de la baraja)
                     const offset = (index - current + images.length) % images.length;
+
                     return (
-                      <div
+                      <motion.div
                         key={index}
-                        className={`absolute inset-0 rounded-2xl overflow-hidden transition-all duration-700`}
-                        style={{
-                          transform: `translate(${offset * 12}px, ${offset * 12}px) scale(${
-                            offset === 0 ? 1 : 0.95
-                          })`,
-                          opacity: offset > 2 ? 0 : 1,
-                          zIndex: images.length - offset,
+                        className="absolute inset-0 rounded-2xl overflow-hidden"
+                        style={{ zIndex: images.length - offset }}
+                        animate={{
+                          x: offset * 16, // desplazamiento lateral
+                          y: offset * 12, // desplazamiento vertical
+                          scale: offset === 0 ? 1 : 0.95, // la de adelante más grande
+                          opacity: offset > 2 ? 0 : 1, // oculta las muy atrás
+                        }}
+                        transition={{
+                          type: 'spring',
+                          stiffness: 120,
+                          damping: 22,
                         }}
                       >
                         <Image
                           src={src}
                           alt={`Responsabilidad social ${index + 1}`}
                           fill
-                          className="object-cover"
+                          className="object-cover rounded-2xl shadow-lg"
                           sizes="(max-width: 768px) 100vw, 50vw"
+                          priority={index === current}
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#1A261E]/20 to-transparent" />
-                      </div>
+                        {/* Gradiente sutil encima */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#1A261E]/30 to-transparent" />
+                      </motion.div>
                     );
                   })}
                 </div>
@@ -100,8 +109,8 @@ const ResponsabilidadSocialSection: React.FC = () => {
                     <div
                       key={index}
                       className="flex items-start space-x-3 p-3 rounded-lg transition-all duration-300 
-                               hover:translate-x-1 hover:bg-white/5 hover:shadow-sm
-                               group cursor-pointer"
+                                 hover:translate-x-1 hover:bg-white/5 hover:shadow-sm
+                                 group cursor-pointer"
                     >
                       <div className="flex-shrink-0 mt-1">
                         <div className="w-2 h-2 rounded-full bg-[#84458C] group-hover:bg-[#10B981] transition-colors duration-300" />
@@ -118,11 +127,11 @@ const ResponsabilidadSocialSection: React.FC = () => {
                 <div className="pt-4">
                   <button
                     type="button"
-                    className="inline-flex items-center px-6 py-3 bg-[#10B981] hover:bg-[#84458C] 
-                             text-white font-semibold rounded-full transition-all duration-500 
-                             transform hover:scale-105 focus:outline-none focus:ring-4 
-                             focus:ring-[#10B981]/30 shadow-lg hover:shadow-xl 
-                             hover:shadow-[#84458C]/25 text-sm"
+                    className="group inline-flex items-center px-6 py-3 bg-[#10B981] hover:bg-[#84458C] 
+                               text-white font-semibold rounded-full transition-all duration-500 
+                               transform hover:scale-105 focus:outline-none focus:ring-4 
+                               focus:ring-[#10B981]/30 shadow-lg hover:shadow-xl 
+                               hover:shadow-[#84458C]/25 text-sm"
                   >
                     <span>Conocer impacto</span>
                     <svg
