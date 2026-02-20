@@ -28,7 +28,7 @@ Promovemos la inclusión del sector minero en el sistema financiero, ofreciendo 
             <Button
               variant="primary"
               size="lg"
-              href="/servicios"
+              href="/construccion/servicios"
               className="bg-[#ffffff] hover:bg-[#552d5a] text-black font-semibold px-6 py-3 rounded-full text-sm md:text-base"
             >
               Conocer servicios
@@ -37,7 +37,7 @@ Promovemos la inclusión del sector minero en el sistema financiero, ofreciendo 
             <Button
               variant="outline"
               size="lg"
-              href="/contacto"
+              href="/construccion/contacto"
               className="border-white/30 text-white hover:bg-white/10 font-semibold px-6 py-3 rounded-full text-sm md:text-base"
             >
               Contactar
