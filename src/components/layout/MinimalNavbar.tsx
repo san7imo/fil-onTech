@@ -10,10 +10,10 @@ import Container from '@/components/ui/Container';
 
 // Definimos las rutas
 const NAVIGATION = [
-  { name: 'Inicio', href: '/' },
-  { name: 'Quiénes Somos', href: '/quienes-somos' },
-  { name: 'Servicios', href: '/servicios' },
-  { name: 'Contacto', href: '/contacto' },
+  { name: 'Inicio', href: '/construccion' },
+  { name: 'Quiénes Somos', href: '/construccion/quienes-somos' },
+  { name: 'Servicios', href: '/construccion/servicios' },
+  { name: 'Contacto', href: '/construccion/contacto' },
 ];
 
 const MinimalNavbar = () => {
@@ -26,14 +26,16 @@ const MinimalNavbar = () => {
   }, [pathname]);
 
   const navIcons = {
-    '/': Home,
-    '/quienes-somos': Users,
-    '/servicios': Briefcase,
-    '/contacto': Mail,
+    '/construccion': Home,
+    '/construccion/quienes-somos': Users,
+    '/construccion/servicios': Briefcase,
+    '/construccion/contacto': Mail,
   };
 
   const isActive = (href: string): boolean =>
-    href === '/' ? pathname === '/' : pathname.startsWith(href);
+    href === '/construccion'
+      ? pathname === '/construccion'
+      : pathname.startsWith(href);
 
   return (
     <nav className="relative z-40">

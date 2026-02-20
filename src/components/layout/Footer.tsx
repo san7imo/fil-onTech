@@ -14,7 +14,7 @@ const Footer = () => {
             {/* Información de la empresa */}
             <div className="lg:col-span-2">
               <div className="mb-6">
-                <Link href="/" className="flex items-center space-x-2">
+                <Link href="/construccion" className="flex items-center space-x-2">
                   <div className="flex flex-col">
                     <span className="text-3xl font-bold text-white">
                       fil-On
@@ -98,7 +98,7 @@ const Footer = () => {
                 {SERVICES.map((service) => (
                   <li key={service.id}>
                     <Link
-                      href={`/servicios#${service.id}`}
+                      href={`/construccion/servicios#${service.id}`}
                       className="text-gray-300 hover:text-emerald-400 transition-colors duration-200"
                     >
                       {service.title}
@@ -116,7 +116,7 @@ const Footer = () => {
                   Únete a la revolución tecnológica agrominera cripto.
                 </p>
                 <Link
-                  href="/contacto"
+                  href="/construccion/contacto"
                   className="inline-flex items-center space-x-2 text-sm font-medium text-emerald-400 hover:text-emerald-300 transition-colors duration-200"
                 >
                   <span>Contactar ahora</span>

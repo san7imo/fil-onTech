@@ -13,10 +13,10 @@ export const COMPANY_INFO = {
 
 // Navegación principal
 export const NAVIGATION: NavItem[] = [
-  { name: 'Inicio', href: '/' },
-  { name: 'Quiénes somos', href: '/quienes-somos' },
-  { name: 'Servicios', href: '/servicios' },
-  { name: 'Contacto', href: '/contacto' },
+  { name: 'Inicio', href: '/construccion' },
+  { name: 'Quiénes somos', href: '/construccion/quienes-somos' },
+  { name: 'Servicios', href: '/construccion/servicios' },
+  { name: 'Contacto', href: '/construccion/contacto' },
 ] as const;
 
 // Servicios principales

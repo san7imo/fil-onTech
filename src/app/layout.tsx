@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { COMPANY_INFO } from '@/lib/constants';
-import Footer from '@/components/layout/Footer';
 
 // Fuente principal: Inter (todos los pesos)
 const inter = Inter({
@@ -79,15 +78,7 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="es" className={`${inter.variable} scroll-smooth`}>
-      <body className="font-sans antialiased bg-[#0F1112] text-white">
-        <div className="min-h-screen flex flex-col">
-          {/* Contenido dinámico de cada página */}
-          <main className="flex-grow">{children}</main>
-
-          {/* Footer global */}
-          <Footer />
-        </div>
-      </body>
+      <body className="font-sans antialiased bg-[#0F1112] text-white">{children}</body>
     </html>
   );
 }
