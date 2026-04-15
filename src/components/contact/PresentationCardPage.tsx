@@ -105,7 +105,7 @@ export default function PresentationCardPage({
                       <span className="block text-xs uppercase tracking-[0.24em] text-white/48">
                         Correo
                       </span>
-                      <span className="block break-all text-lg font-medium text-white">
+                      <span className="block break-all text-sm font-medium text-white sm:text-lg">
                         {profile.email}
                       </span>
                     </span>
