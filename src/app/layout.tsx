@@ -11,6 +11,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(`https://${COMPANY_INFO.website}`),
   title: {
     default: `${COMPANY_INFO.name} - ${COMPANY_INFO.tagline}`,
     template: `%s | ${COMPANY_INFO.name}`,
