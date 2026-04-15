@@ -52,7 +52,7 @@ export default function PresentationCardPage({
       <Container className="relative flex min-h-screen items-center py-12 sm:py-16">
         <div className="w-full overflow-hidden rounded-lg border border-white/10 bg-white/6 shadow-[0_24px_80px_rgba(0,0,0,0.35)] backdrop-blur-xl">
           <div className="grid lg:grid-cols-[0.88fr_1.12fr]">
-            <div className="flex items-center justify-center border-b border-white/10 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_0%,rgba(255,255,255,0.03)_45%,rgba(0,0,0,0.08)_100%)] p-8 sm:p-10 lg:border-r lg:border-b-0">
+            <div className="flex items-center justify-center border-b border-white/10 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_0%,rgba(255,255,255,0.03)_45%,rgba(0,0,0,0.08)_100%)] p-6 sm:p-10 lg:border-r lg:border-b-0">
                   <Image
                     src="/images/logo-nuevo.webp"
                     alt="Logo de Fil-On Tech"
@@ -63,11 +63,11 @@ export default function PresentationCardPage({
                   />
             </div>
 
-            <div className="p-8 sm:p-10">
+            <div className="p-6 sm:p-10">
               <div className="mx-auto flex max-w-2xl flex-col gap-8">
                 <div className="space-y-4">
                   <div className="space-y-2 text-center sm:text-left">
-                    <h1 className="whitespace-nowrap text-[1.7rem] font-semibold leading-tight text-white sm:text-4xl">
+                    <h1 className="whitespace-nowrap text-[clamp(1.05rem,6.1vw,1.7rem)] font-semibold leading-tight text-white sm:text-4xl">
                       {profile.name}
                     </h1>
                     <p className="text-xl text-emerald-300 sm:text-2xl">
